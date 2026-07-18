@@ -23,14 +23,10 @@ public final class PlayerModeCommand {
     private PlayerModeCommand() {}
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("spectate")
+        dispatcher.register(Commands.literal("mode")
                 .requires(source -> source.getEntity() instanceof ServerPlayer)
-                .executes(context -> enterSpectator(context.getSource()))
-        );
-
-        dispatcher.register(Commands.literal("survival")
-                .requires(source -> source.getEntity() instanceof ServerPlayer)
-                .executes(context -> returnToSurvival(context.getSource()))
+                .then(Commands.literal("spectate").executes(context -> enterSpectator(context.getSource())))
+                .then(Commands.literal("survival").executes(context -> returnToSurvival(context.getSource())))
         );
     }
 
@@ -55,7 +51,7 @@ public final class PlayerModeCommand {
             source.sendFailure(
                     Component.literal(
                             "You already have a saved spectator "
-                                    + "return location. Use /survival first."
+                                    + "return location. Use /mode survival first."
                     )
             );
 
@@ -89,7 +85,7 @@ public final class PlayerModeCommand {
         source.sendSuccess(
                 () -> Component.literal(
                         "Entered spectator mode. "
-                                + "Use /survival to return."
+                                + "Use /mode survival to return."
                 ),
                 false
         );
@@ -112,7 +108,7 @@ public final class PlayerModeCommand {
             source.sendFailure(
                     Component.literal(
                             "You must be in spectator mode "
-                                    + "to use /survival."
+                                    + "to use /mode survival."
                     )
             );
 

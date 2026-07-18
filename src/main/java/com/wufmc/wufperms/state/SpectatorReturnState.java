@@ -38,7 +38,7 @@ public final class SpectatorReturnState {
      * Saves only when no location is already present.
      *
      * This prevents a player from replacing their original return position
-     * by running /spectate repeatedly.
+     * by running /mode spectate repeatedly.
      */
     public static synchronized boolean saveLocation(UUID playerId, SpectatorReturnLocation location) {
         if (LOCATIONS.containsKey(playerId)) {
